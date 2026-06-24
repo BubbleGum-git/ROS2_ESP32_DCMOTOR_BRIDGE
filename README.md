@@ -1,6 +1,6 @@
 # ESP32 Motor Controller
 
-This code turns an ESP32 into a **closed-loop motor controller**. It provides a simple serial interface to communicate with a high-level computer (e.g. running ROS2) and generates the appropriate PWM signals for a motor driver to drive two motors in closed loop.
+This code turns an ESP32 into a **closed-loop motor controller**. It provides a simple serial interface to communicate with a high-level computer (e.g. running ROS2) and generates the appropriate PWM signals for a motor driver to drive two motors in closed loop. With Latest LEDC Update for ESP32 Boards.
 
 This is a fork of [manojramesh-io/ROS2-ESP32-Serial-Bridge](https://github.com/manojramesh-io/ROS2-ESP32-Serial-Bridge), modified to work with **4-pin motor drivers like the L298N** (IN1, IN2, IN3, IN4, ENA, ENB) instead of the original single direction-pin + PWM layout. Individual PID gains per motor have also been added.
 
@@ -44,8 +44,8 @@ Defined in `config.h` — change to match your wiring:
 | Signal | GPIO | Notes |
 |---|---|---|
 | Encoder 0 — Channel A (Left) | 32 | `INPUT_PULLUP` |
-| Encoder 0 — Channel B (Left) | 35 | External 10kΩ to 3.3V required — no internal pull-up |
-| Encoder 1 — Channel A (Right) | 34 | External 10kΩ to 3.3V required — no internal pull-up |
+| Encoder 0 — Channel B (Left) | 35 | External 10kΩ to 3.3V required — no internal pull-up (NOT RECOMENDED)|
+| Encoder 1 — Channel A (Right) | 34 | External 10kΩ to 3.3V required — no internal pull-up (NOT RECOMENDED)|
 | Encoder 1 — Channel B (Right) | 33 | `INPUT_PULLUP` |
 | Left Motor ENB (PWM) | 27 | |
 | Left Motor IN3 | 26 | |
@@ -54,13 +54,13 @@ Defined in `config.h` — change to match your wiring:
 | Right Motor IN1 | 14 | |
 | Right Motor IN2 | 25 | |
 
-> **GPIO 34 and 35** are input-only pins on the ESP32 with **no internal pull-up resistors**. You must add a physical **10kΩ resistor from each pin to 3.3V** on your board, otherwise floating inputs will trigger false encoder interrupts and cause motors to spin uncontrollably.
+> **GPIO 34 and 35** are input-only pins on the ESP32 with **no internal pull-up resistors**. You must add a physical **10kΩ resistor from each pin to 3.3V** on your board, otherwise floating inputs will trigger false encoder interrupts and cause motors to spin uncontrollably. Only Used for a special purpose here.
 
 ---
 
 ## Software Dependencies
 
-- [Arduino ESP32 Core](https://github.com/espressif/arduino-esp32) v3.x or later
+- [Arduino ESP32 Core](https://github.com/espressif/arduino-esp32)
 - Arduino IDE or PlatformIO
 
 Add ESP32 board support in Arduino IDE via Board Manager URL:
