@@ -6,7 +6,7 @@
   #include <motor_driver.h>
   #include <encoder.h>
   #include <pid.h>
-  #define AUTO_STOP_INTERVAL 2000
+  #define AUTO_STOP_INTERVAL 999999
   long lastMotorCommand = 0;
 #endif
 
