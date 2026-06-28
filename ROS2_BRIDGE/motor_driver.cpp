@@ -2,22 +2,15 @@
 
 void robot_setup() {
   // Direction pins
-  pinMode(LEFT_MOTOR_IN3,  OUTPUT);
-  pinMode(LEFT_MOTOR_IN4,  OUTPUT);
-  pinMode(RIGHT_MOTOR_IN1, OUTPUT);
-  pinMode(RIGHT_MOTOR_IN2, OUTPUT);
+  ledcAttach(RIGHT_MOTOR_IN1, freq, lresolution);
+  ledcAttach(RIGHT_MOTOR_IN2, freq, lresolution);
+  ledcAttach(LEFT_MOTOR_IN3,  freq, lresolution);
+  ledcAttach(LEFT_MOTOR_IN4,  freq, lresolution);
 
-  // PWM pins
-  ledcAttach(LEFT_MOTOR_ENB,  freq, lresolution);
-  ledcAttach(RIGHT_MOTOR_ENA, freq, lresolution);
-
-  // Start stopped
-  digitalWrite(LEFT_MOTOR_IN3,  LOW);
-  digitalWrite(LEFT_MOTOR_IN4,  LOW);
-  digitalWrite(RIGHT_MOTOR_IN1, LOW);
-  digitalWrite(RIGHT_MOTOR_IN2, LOW);
-  ledcWrite(LEFT_MOTOR_ENB,  0);
-  ledcWrite(RIGHT_MOTOR_ENA, 0);
+  ledcWrite(RIGHT_MOTOR_IN1, 0);
+  ledcWrite(RIGHT_MOTOR_IN2, 0);
+  ledcWrite(LEFT_MOTOR_IN3,  0);
+  ledcWrite(LEFT_MOTOR_IN4,  0);
 }
 
 void setMotorSpeed(int i, int spd) {
@@ -30,14 +23,12 @@ void setMotorSpeed(int i, int spd) {
   if (spd > 255) spd = 255;
 
   if (i == LEFT) {
-    digitalWrite(LEFT_MOTOR_IN3, reverse == 0 ? HIGH : LOW);
-    digitalWrite(LEFT_MOTOR_IN4, reverse == 0 ? LOW : HIGH);
-    ledcWrite(LEFT_MOTOR_ENB, spd);
-  } else {
-    digitalWrite(RIGHT_MOTOR_IN1, reverse == 0 ? HIGH : LOW);
-    digitalWrite(RIGHT_MOTOR_IN2, reverse == 0 ? LOW : HIGH);
-    ledcWrite(RIGHT_MOTOR_ENA, spd);
-  }
+  if (reverse == 0) { ledcWrite(LEFT_MOTOR_IN3, spd); ledcWrite(LEFT_MOTOR_IN4, 0); }
+  else              { ledcWrite(LEFT_MOTOR_IN3, 0);   ledcWrite(LEFT_MOTOR_IN4, spd); }
+} else {
+  if (reverse == 0) { ledcWrite(RIGHT_MOTOR_IN1, spd); ledcWrite(RIGHT_MOTOR_IN2, 0); }
+  else              { ledcWrite(RIGHT_MOTOR_IN1, 0);   ledcWrite(RIGHT_MOTOR_IN2, spd); }
+}
 }
 
 void setMotorSpeeds(int leftSpeed, int rightSpeed) {

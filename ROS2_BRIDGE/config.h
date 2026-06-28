@@ -45,11 +45,11 @@
 
 /* Motor Driver Interrupts */
 #ifdef USE_GENERIC_MOTOR_DRIVER
-    #define RIGHT_MOTOR_ENA  14    // PWM
+    //#define RIGHT_MOTOR_ENA  14    // PWM
     #define RIGHT_MOTOR_IN1  14    // direction
     #define RIGHT_MOTOR_IN2  25    // direction
 
-    #define LEFT_MOTOR_ENB   27    // PWM
+    //#define LEFT_MOTOR_ENB   27    // PWM
     #define LEFT_MOTOR_IN3   26    // direction  ← pick free GPIO
     #define LEFT_MOTOR_IN4   27    // direction  ← pick free GPIO
 #endif
